@@ -1,0 +1,92 @@
+type Query {
+  "Lista de la temporadas de F1. De 1950 a 2022"
+  seasonsList: [Season!]!
+  """
+  Obtenemos la informacion de las carreras seleccionadas por año
+  Tener en cuenta que solo exiten desde 1950 a 2022
+  """
+  racesByYear(year: String!): [Race!]!
+  "Carrera seleccionada por año y por número de carrera"
+  raceSelect(year: String!, round: Int!): Race
+  "Lista de pilotos historicos"
+  historyDrivers(pageElements: Int, page: Int): [Driver!]!
+  "Lista de pilotos por año"
+  driversYear(year: String!): [Driver!]!
+  "Lista de pilotos por año y round"
+  driversYearAndRound(year: String!, round: Int!): [Driver!]!
+  "Información de piloto por codigo"
+  driverSelect(id: String!): Driver
+  "Resultados por temporada"
+  driverStandingsByYear(year: String!): [DriverStandings]!
+  "Lista de Circuitos historicos paginado"
+  historyCircuits(pageElements: Int, page: Int): [Circuit!]!
+  "Información de circuito por año y número de carrera"
+  circuitSelect(year:String!, round: Int!): Circuit
+}
+
+type Mutation {
+  add(value: String!): [String]
+}
+
+type Season {
+  "Año"
+  year: String!
+  "Url"
+  url: String!
+  "Url ajustada a mobile"
+  urlMobile: String!
+}
+
+type Location {
+  lat: String!
+  lng: String!
+  locality: String!
+  country: String!
+}
+
+type Circuit {
+  id: String!
+  url: String!
+  urlMobile: String!
+  name: String!
+  location: Location!
+}
+
+type Race {
+  season: String!
+  round: String!
+  url: String!
+  urlMobile: String!
+  name: String!
+  circuit: Circuit!
+  date: String!
+  time: String
+}
+
+type Driver {
+  id: String!
+  code: String
+  url: String!
+  urlMobile: String!
+  name: String!
+  dateOfBirth: String!
+  nationality: String!
+  permanentNumber: String
+}
+
+type Constructors {
+  id: String!
+  url: String!
+  name: String!
+  nationality: String!
+}
+
+type DriverStandings {
+  position: String!
+  positionText: String
+  points: String!
+  wins: String!
+  driver: Driver!
+  constructors: [Constructors!]!
+}
+
